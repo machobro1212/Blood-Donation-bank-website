@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading...</title>
+<style>
+    /* Loading page styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+    }
+
+    .loader {
+        border: 8px solid transparent;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { border-top-color: red; }
+        25% { border-top-color: orange; }
+        50% { border-top-color: yellow; }
+        75% { border-top-color: green; }
+        100% { border-top-color: blue; }
+    }
+
+    .loader-container {
+        display: none;
+    }
+
+    .loaded {
+        display: block;
+    }
+
+    /* Style for the 3D box */
+    .box {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .box:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Additional styling for the form elements */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button[type="button"],
+    button[type="submit"] {
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+    }
+
+    button[type="button"]:hover,
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<div class="loader-container" id="loader">
+    <div class="loader"></div>
+</div>
+
+<div class="loaded" id="content">
+    <div class="col-lg-6 col-md-6 col-12">
+        <!-- 3D Box -->
+        <div class="box">
+            <form class="form" id="donation-form" action="https://api.web3forms.com/submit" method="POST">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input type="hidden" name="access_key" value="870da5e4-061e-49d3-b01c-cfe5ab040023">
+                            <input type="text" id="Name" name="Name" placeholder="Name" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="Email" name="Email" placeholder="Email" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="PhoneNumber" name="PhoneNumber" placeholder="Phone Number" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="AadharNumber" name="AadharNumber" placeholder="Aadhar Card Number" required="">
+                        </div>
+                        <div class="form-group">
+                            <select id="BloodGroup" name="BloodGroup" required="">
+                                <option value="" selected disabled>Select Blood Group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Gender">Gender:</label>
+                            <input type="radio" id="Male" name="Gender" value="Male" required="">
+                            <label for="Male">Male</label>
+                            <input type="radio" id="Female" name="Gender" value="Female" required="">
+                            <label for="Female">Female</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" id="Date" name="Date" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="Location" name="Location" placeholder="Location" required="">
+                            <button type="button" onclick="getLocation()">Get Location</button>
+                        </div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var location = "Latitude: " + latitude + ", Longitude: " + longitude;
+        document.getElementById("Location").value = location;
+    }
+
+    // Function to hide loader and show content after 2 seconds
+    setTimeout(function(){
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    }, 2000);
+</script>
+</body>
+</html>
